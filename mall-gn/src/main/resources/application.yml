@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    alicloud:
+      access-key: LTAI4G6xrsBMiiWNhyRn8ZyU
+      secret-key: z2pzw1Q01r9hoD6VCIGjGoJhIx20Hg
+      oss:
+        endpoint: oss-cn-chengdu.aliyuncs.com
+        bucket: gulimall-shoping
+  datasource:
+    password: root
+    username: root
+    url: jdbc:mysql://127.0.0.1:3306/mall?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: localhost
+    open: true
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+logging:
+  level:
+    com.shoping.mallgn: debug
+
+

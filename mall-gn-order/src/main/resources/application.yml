@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.26.172.176:8848
+  application:
+    name: mall-gn-order
+server:
+  port: 8082
+#对Feign的支持
+feign:
+  sentinel:
+    enabled: true

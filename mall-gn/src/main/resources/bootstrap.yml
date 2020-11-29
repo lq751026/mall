@@ -1,0 +1,14 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: mall-gn
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.26.172.176:8848 #\u670D\u52A1\u6CE8\u518C\u4E2D\u5FC3\u5730\u5740
+      config:
+        server-addr: 120.26.172.176:8848 #\u914D\u7F6E\u4E2D\u5FC3\u5730\u5740
+        namespace: dbcdd0a7-e7e9-4d8c-b4bb-6ee0d29b7816
+        group: dev

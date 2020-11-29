@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shoping.mallgn.dao.CommodityDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.shoping.mallgn.entity.CommodityEntity" id="commodityMap">
+        <result property="cmId" column="cm_id"/>
+        <result property="cmName" column="cm_name"/>
+        <result property="cmLogo" column="cm_logo"/>
+        <result property="cmPrice" column="cm_price"/>
+        <result property="cmInId" column="cm_in_id"/>
+        <result property="cmAmount" column="cm_amount"/>
+        <result property="cmAmounted" column="cm_amounted"/>
+        <result property="cmQuota" column="cm_quota"/>
+        <result property="stId" column="st_id"/>
+        <result property="mtId" column="mt_id"/>
+    </resultMap>
+
+
+</mapper>
