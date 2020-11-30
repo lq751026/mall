@@ -8,7 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-
+<name>mall-gn</name>
 	<artifactId>cloud_consule_pay_8006</artifactId>
 
 	<dependencies>
@@ -16,41 +16,18 @@
 			<groupId>io.renren</groupId>
 			<artifactId>renren-fast</artifactId>
 			<version>3.0.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>cn.hutool</groupId>
+					<artifactId>hutool-all</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-       <!--糊涂包-->
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>5.5.1</version>
-		</dependency>
+
 		<!--生成exelc-->
-
-
-		<!--poi的依赖-->
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>4.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.11</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml-schemas</artifactId>
-			<version>3.11</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlbeans</groupId>
-			<artifactId>xmlbeans</artifactId>
-			<version>2.6.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-examples</artifactId>
-			<version>3.11</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<!-- springboot整合Web组件 -->
 		<dependency>

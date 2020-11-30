@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,8 +39,15 @@ public class SortController {
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = sortService.queryPage(params);
-        return R.ok().put("page", page);
+        String page1 = (String) params.get("page");
+        R r =null;
+        if(page1.equals("1")){
+             r = sortService.listpage(params);
+        }else{
+            r= sortService.listNoPage(params);
+        }
+
+        return r;
     }
 
     //listWithThree
@@ -47,6 +56,7 @@ public class SortController {
      * 获取列表
      */
     @RequestMapping("/list/tree")
+
     public R listtree(){
         List<SortEntity> list = sortService.listWithThree();
         return R.ok().put("data", list);
@@ -66,6 +76,7 @@ public class SortController {
     /**
      * 保存
      */
+    @CacheEvict(value = "sort",key = "'R'")
     @RequestMapping("/save")
     public R save(@RequestBody SortEntity sort){
 		sortService.save(sort);
@@ -76,6 +87,7 @@ public class SortController {
     /**
      * 修改
      */
+    @CacheEvict(value = "sort",key = "'R'")
     @RequestMapping("/update")
     public R update(@RequestBody SortEntity sort){
 		sortService.updateById(sort);
@@ -86,6 +98,7 @@ public class SortController {
     /**
      * 删除
      */
+    @CacheEvict(value = "sort",key = "'R'")
     @RequestMapping("/delete")
     public R delete(@RequestBody Integer[] stIds){
 		sortService.removeByIds(Arrays.asList(stIds));

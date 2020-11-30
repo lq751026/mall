@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @date 2020-11-26 14:42:28
  */
 @Data
-@TableName("order")
+@TableName("orders")
 public class OrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -1,6 +1,9 @@
 package com.shoping.mallgn.service.impl;
 
 import com.mysql.cj.util.StringUtils;
+import io.renren.common.utils.R;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -31,5 +34,16 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityDao, CommodityEnt
 
         return new PageUtils(page);
     }
+    @Cacheable(value = "commodity",key = "'R'")
+    public R listpage(Map<String, Object> params){
+        PageUtils page = this.queryPage(params);
 
+        return R.ok().put("page", page);
+    }
+
+    @CacheEvict(value = "commodity",key = "'R'")
+    public R listNoPage(Map<String, Object> params){
+        PageUtils page = this.queryPage(params);
+        return R.ok().put("page", page);
+    }
 }

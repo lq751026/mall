@@ -7,6 +7,8 @@ import java.util.Map;
 import com.shoping.mallgn.entity.MerchantEntity;
 import com.shoping.mallgn.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,13 +39,20 @@ public class CommodityController {
 
     /**
      * 列表
+     *     *    @Cacheable(value = "commodity",key = "'R'")
+     *      *     @CacheEvict(value = "commodity",key = "'R'")
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = commodityService.queryPage(params);
-        return R.ok().put("page", page);
+        String page1 = (String) params.get("page");
+        R r =null;
+        if(page1.equals("1")){
+            r = commodityService.listpage(params);
+        }else{
+            r= commodityService.listNoPage(params);
+        }
+        return r;
     }
-
 
     /**
      * 信息
@@ -58,6 +67,7 @@ public class CommodityController {
     /**
      * 保存
      */
+    @CacheEvict(value = "commodity",key = "'R'")
     @RequestMapping("/save")
     public R save(@RequestBody CommodityEntity commodity){
 		commodityService.save(commodity);
@@ -68,6 +78,7 @@ public class CommodityController {
     /**
      * 修改
      */
+    @CacheEvict(value = "commodity",key = "'R'")
     @RequestMapping("/update")
     public R update(@RequestBody CommodityEntity commodity){
 		commodityService.updateById(commodity);
@@ -78,6 +89,7 @@ public class CommodityController {
     /**
      * 删除
      */
+    @CacheEvict(value = "commodity",key = "'R'")
     @RequestMapping("/delete")
     public R delete(@RequestBody Integer[] cmIds){
 		commodityService.removeByIds(Arrays.asList(cmIds));

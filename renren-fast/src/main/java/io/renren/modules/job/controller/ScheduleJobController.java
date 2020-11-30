@@ -16,6 +16,7 @@ import io.renren.modules.job.entity.ScheduleJobEntity;
 import io.renren.modules.job.service.ScheduleJobService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -34,6 +35,7 @@ public class ScheduleJobController {
 	/**
 	 * 定时任务列表
 	 */
+	@Cacheable(cacheNames ={"params"})
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:schedule:list")
 	public R list(@RequestParam Map<String, Object> params){

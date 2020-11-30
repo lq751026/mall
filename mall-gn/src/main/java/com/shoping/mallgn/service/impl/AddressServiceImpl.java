@@ -1,6 +1,9 @@
 package com.shoping.mallgn.service.impl;
 
 import com.mysql.cj.util.StringUtils;
+import io.renren.common.utils.R;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -17,7 +20,6 @@ import com.shoping.mallgn.service.AddressService;
 @Service("addressService")
 public class AddressServiceImpl extends ServiceImpl<AddressDao, AddressEntity> implements AddressService {
 
-
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         Object key = params.get("key");
@@ -31,6 +33,18 @@ public class AddressServiceImpl extends ServiceImpl<AddressDao, AddressEntity> i
         );
 
         return new PageUtils(page);
+    }
+    @Cacheable(value = "address",key = "'R'")
+    public R listpage(Map<String, Object> params){
+        PageUtils page = this.queryPage(params);
+
+        return R.ok().put("page", page);
+    }
+
+    @CacheEvict(value = "address",key = "'R'")
+    public R listNoPage(Map<String, Object> params){
+        PageUtils page = this.queryPage(params);
+        return R.ok().put("page", page);
     }
 
 }

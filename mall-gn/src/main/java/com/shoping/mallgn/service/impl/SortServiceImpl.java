@@ -1,5 +1,10 @@
 package com.shoping.mallgn.service.impl;
 
+import com.mysql.cj.util.StringUtils;
+import com.shoping.mallgn.entity.UrCmEntity;
+import io.renren.common.utils.R;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +36,17 @@ public class SortServiceImpl extends ServiceImpl<SortDao, SortEntity> implements
         return new PageUtils(page);
     }
 
+    @Cacheable(value = "sort",key = "'R'")
+    public R listpage(Map<String, Object> params){
+        PageUtils   page = this.queryBuPage(params);
+        return R.ok().put("page", page);
+    }
 
+    @CacheEvict(value = "sort",key = "'R'")
+    public R listNoPage(Map<String, Object> params){
+        PageUtils page = this.queryBuPage(params);
+        return R.ok().put("page", page);
+    }
 
     public List<SortEntity> listWithThree() {
         //1.查出所有分类
@@ -45,6 +60,21 @@ public class SortServiceImpl extends ServiceImpl<SortDao, SortEntity> implements
             return menu;
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    @Override
+    public PageUtils queryBuPage(Map<String, Object> params) {
+        QueryWrapper<SortEntity> wrapper = new QueryWrapper<>();
+        Object key = params.get("key");
+        if(!StringUtils.isNullOrEmpty(key.toString())){
+             wrapper.like("st_id",key).or().like("st_name",key);
+        }
+        IPage<SortEntity> page = this.page(
+                new Query<SortEntity>().getPage(params),
+                wrapper
+        );
+
+        return new PageUtils(page);
     }
 
 

@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,11 +37,15 @@ public class OrderController {
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = orderService.queryPage(params);
-
-        return R.ok().put("page", page);
+        String page1 = (String) params.get("page");
+        R r =null;
+        if(page1.equals("1")){
+            r = orderService.listpage(params);
+        }else{
+            r= orderService.listNoPage(params);
+        }
+        return r;
     }
-
 
     /**
      * 信息
@@ -54,6 +60,7 @@ public class OrderController {
     /**
      * 保存
      */
+    @CacheEvict(value = "order",key = "'R'")
     @RequestMapping("/save")
     public R save(@RequestBody OrderEntity order){
 		orderService.save(order);
@@ -64,6 +71,7 @@ public class OrderController {
     /**
      * 修改
      */
+    @CacheEvict(value = "order",key = "'R'")
     @RequestMapping("/update")
     public R update(@RequestBody OrderEntity order){
 		orderService.updateById(order);
@@ -74,6 +82,7 @@ public class OrderController {
     /**
      * 删除
      */
+    @CacheEvict(value = "order",key = "'R'")
     @RequestMapping("/delete")
     public R delete(@RequestBody String[] orUuids){
 		orderService.removeByIds(Arrays.asList(orUuids));
